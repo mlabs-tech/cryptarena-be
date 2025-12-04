@@ -27,6 +27,7 @@ public class WalletService {
     private final WalletRepository walletRepository;
     private final UserRepository userRepository;
     private final SolanaSignatureService solanaSignatureService;
+    private final QuestService questService;
     
     // Message validity period: 5 minutes
     private static final long MESSAGE_MAX_AGE_MS = 5 * 60 * 1000;
@@ -160,6 +161,14 @@ public class WalletService {
 
         wallet = walletRepository.save(wallet);
         log.info("Wallet {} linked to user {}", request.getAddress(), userId);
+
+        // Trigger quest completion for linking wallet
+        try {
+            questService.onWalletLinked(user);
+        } catch (Exception e) {
+            log.warn("Failed to update quest for wallet linking: {}", e.getMessage());
+            // Don't fail the wallet linking if quest update fails
+        }
 
         return WalletDto.fromEntity(wallet);
     }

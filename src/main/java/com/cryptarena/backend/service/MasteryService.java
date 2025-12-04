@@ -22,6 +22,7 @@ public class MasteryService {
 
     private final ChampionMasteryRepository masteryRepository;
     private final WalletRepository walletRepository;
+    private final QuestService questService;
 
     /**
      * Points awarded based on placement
@@ -160,6 +161,14 @@ public class MasteryService {
 
         log.debug("Awarded {} points to user {} for champion {} (placement: {})",
             pointsEarned, user.getId(), assetIndex, placement);
+        
+        // Update quest progress for arena participation and wins
+        try {
+            questService.onArenaParticipated(user, Boolean.TRUE.equals(result.getIsWinner()));
+        } catch (Exception e) {
+            log.warn("Failed to update quest progress for user {}: {}", user.getId(), e.getMessage());
+            // Don't fail mastery update if quest update fails
+        }
         
         return true;
     }

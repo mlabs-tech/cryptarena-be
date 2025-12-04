@@ -43,6 +43,8 @@ public class SecurityConfig {
                         .requestMatchers("/api/users/public/**").permitAll()
                         .requestMatchers("/api/mastery/public/**").permitAll()
                         .requestMatchers("/api/mastery/internal/**").permitAll() // Secured via API key
+                        .requestMatchers("/api/quests/public/**").permitAll()
+                        .requestMatchers("/api/quests/admin/**").permitAll() // Secured via API key
                         .requestMatchers("/error").permitAll()
                         // Protected endpoints
                         .anyRequest().authenticated()
