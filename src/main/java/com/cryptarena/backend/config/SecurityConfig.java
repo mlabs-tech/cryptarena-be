@@ -40,6 +40,7 @@ public class SecurityConfig {
                         .requestMatchers("/api/health/**").permitAll()
                         .requestMatchers("/api/crypto/**").permitAll()
                         .requestMatchers("/api/wallets/public/**").permitAll()
+                        .requestMatchers("/api/users/public/**").permitAll()
                         .requestMatchers("/error").permitAll()
                         // Protected endpoints
                         .anyRequest().authenticated()
