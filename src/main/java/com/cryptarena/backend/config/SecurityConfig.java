@@ -41,6 +41,8 @@ public class SecurityConfig {
                         .requestMatchers("/api/crypto/**").permitAll()
                         .requestMatchers("/api/wallets/public/**").permitAll()
                         .requestMatchers("/api/users/public/**").permitAll()
+                        .requestMatchers("/api/mastery/public/**").permitAll()
+                        .requestMatchers("/api/mastery/internal/**").permitAll() // Secured via API key
                         .requestMatchers("/error").permitAll()
                         // Protected endpoints
                         .anyRequest().authenticated()

@@ -55,3 +55,7 @@ coinmarketcap:
   base-url: https://pro-api.coinmarketcap.com/v1
   cache-ttl-seconds: 30
 
+# Indexer Service API Key (for internal endpoints)
+indexer:
+  api-key: ${INDEXER_API_KEY:cryptarena-indexer-secret-key-2024}
+
