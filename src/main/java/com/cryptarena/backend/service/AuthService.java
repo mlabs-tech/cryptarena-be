@@ -260,12 +260,18 @@ public class AuthService {
      * Link wallets from Privy API data (more secure - data comes directly from Privy)
      */
     private void linkPrivyWalletsFromApiData(User user, PrivyService.PrivyUserData privyData) {
+        log.info("linkPrivyWalletsFromApiData called for user: {}", user.getId());
+        
         if (privyData.getWallets() == null || privyData.getWallets().isEmpty()) {
-            log.warn("No wallets found in Privy data for user: {}", privyData.getPrivyUserId());
+            log.warn("No wallets found in Privy data for user: {} (privyId: {})", user.getId(), privyData.getPrivyUserId());
             return;
         }
 
+        log.info("Processing {} wallets from Privy for user: {}", privyData.getWallets().size(), user.getId());
+        
         for (PrivyService.WalletInfo walletInfo : privyData.getWallets()) {
+            log.info("Processing wallet: {} with chainType: {}", walletInfo.getAddress(), walletInfo.getChainType());
+            
             String walletType;
             String chainType;
             
@@ -280,8 +286,13 @@ public class AuthService {
                 continue;
             }
             
+            log.info("Calling linkPrivyWallet for address: {}, type: {}, chain: {}, isEmbedded: {}", 
+                    walletInfo.getAddress(), walletType, chainType, walletInfo.isPrivyEmbeddedWallet());
+            
             linkPrivyWallet(user, walletInfo.getAddress(), walletType, chainType, walletInfo.isPrivyEmbeddedWallet());
         }
+        
+        log.info("Finished linking wallets for user: {}", user.getId());
     }
 
     private void linkPrivyWallet(User user, String walletAddress, String walletType, String chainType, boolean isEmbedded) {

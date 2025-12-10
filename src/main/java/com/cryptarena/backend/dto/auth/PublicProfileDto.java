@@ -35,6 +35,8 @@ public class PublicProfileDto {
         private String address;
         private String walletType;
         private Boolean isPrimary;
+        private String chainType;
+        private String walletSource;
     }
     
     public static PublicProfileDto fromEntity(User user) {
@@ -44,6 +46,8 @@ public class PublicProfileDto {
                     .address(wallet.getAddress())
                     .walletType(wallet.getWalletType())
                     .isPrimary(wallet.getIsPrimary())
+                    .chainType(wallet.getChainType())
+                    .walletSource(wallet.getWalletSource())
                     .build())
                 .collect(Collectors.toList())
             : List.of();

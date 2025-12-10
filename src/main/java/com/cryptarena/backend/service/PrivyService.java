@@ -89,7 +89,7 @@ public class PrivyService {
                     .bodyToMono(String.class)
                     .block();
             
-            log.debug("Privy API response: {}", response);
+            log.info("Privy API response for user {}: {}", privyUserId, response);
             
             return parsePrivyUserResponse(response);
             
@@ -119,14 +119,20 @@ public class PrivyService {
             // Extract user ID
             builder.privyUserId(root.has("id") ? root.get("id").asText() : null);
             
+            log.info("Parsing Privy user: {}", root.has("id") ? root.get("id").asText() : "unknown");
+            
             // Parse linked accounts
             if (root.has("linked_accounts") && root.get("linked_accounts").isArray()) {
                 JsonNode linkedAccounts = root.get("linked_accounts");
+                
+                log.info("Found {} linked accounts in Privy response", linkedAccounts.size());
                 
                 List<WalletInfo> wallets = new ArrayList<>();
                 
                 for (JsonNode account : linkedAccounts) {
                     String type = account.has("type") ? account.get("type").asText() : "";
+                    
+                    log.debug("Processing linked account type: {}", type);
                     
                     // Extract Twitter data
                     if ("twitter_oauth".equals(type)) {
@@ -134,14 +140,18 @@ public class PrivyService {
                         builder.twitterUsername(account.has("username") ? account.get("username").asText() : null);
                         builder.twitterName(account.has("name") ? account.get("name").asText() : null);
                         builder.twitterProfilePicture(account.has("profile_picture_url") ? account.get("profile_picture_url").asText() : null);
+                        log.info("Found Twitter account: {}", account.has("username") ? account.get("username").asText() : "unknown");
                     }
                     
-                    // Extract wallet data
+                    // Extract wallet data - check for both "wallet" type
                     if ("wallet".equals(type)) {
                         String address = account.has("address") ? account.get("address").asText() : null;
                         String chainType = account.has("chain_type") ? account.get("chain_type").asText() : null;
                         String walletClient = account.has("wallet_client") ? account.get("wallet_client").asText() : null;
                         String walletClientType = account.has("wallet_client_type") ? account.get("wallet_client_type").asText() : null;
+                        
+                        log.info("Found wallet in Privy response - address: {}, chainType: {}, walletClient: {}, walletClientType: {}", 
+                                address, chainType, walletClient, walletClientType);
                         
                         if (address != null && chainType != null) {
                             wallets.add(WalletInfo.builder()
@@ -150,11 +160,18 @@ public class PrivyService {
                                     .walletClient(walletClient)
                                     .walletClientType(walletClientType) // "privy" for embedded wallets
                                     .build());
+                            log.info("Added wallet to list: {} ({})", address, chainType);
+                        } else {
+                            log.warn("Wallet missing address or chainType - address: {}, chainType: {}", address, chainType);
                         }
                     }
                 }
                 
+                log.info("Total wallets parsed from Privy: {}", wallets.size());
                 builder.wallets(wallets);
+            } else {
+                log.warn("No linked_accounts found in Privy response");
+                builder.wallets(new ArrayList<>());
             }
             
             PrivyUserData userData = builder.build();
@@ -164,10 +181,14 @@ public class PrivyService {
                 log.warn("Privy user missing Twitter data: {}", userData.getPrivyUserId());
             }
             
+            log.info("Parsed Privy user data - twitterId: {}, twitterUsername: {}, walletCount: {}", 
+                    userData.getTwitterId(), userData.getTwitterUsername(), 
+                    userData.getWallets() != null ? userData.getWallets().size() : 0);
+            
             return userData;
             
         } catch (Exception e) {
-            log.error("Failed to parse Privy user response: {}", e.getMessage());
+            log.error("Failed to parse Privy user response: {}", e.getMessage(), e);
             throw new AuthenticationException("Failed to parse Privy user data");
         }
     }

@@ -28,5 +28,9 @@ public interface WalletRepository extends JpaRepository<Wallet, UUID> {
     int countByUserId(UUID userId);
 
     void deleteByIdAndUserId(UUID id, UUID userId);
+    
+    boolean existsByUserIdAndChainTypeAndWalletSource(UUID userId, String chainType, String walletSource);
+    
+    List<Wallet> findByUserIdAndWalletSource(UUID userId, String walletSource);
 }
 
