@@ -18,6 +18,8 @@ public class WalletDto {
     private UUID id;
     private String address;
     private String walletType;
+    private String walletSource;
+    private String chainType;
     private String label;
     private Boolean isPrimary;
     private LocalDateTime createdAt;
@@ -27,6 +29,8 @@ public class WalletDto {
                 .id(wallet.getId())
                 .address(wallet.getAddress())
                 .walletType(wallet.getWalletType())
+                .walletSource(wallet.getWalletSource())
+                .chainType(wallet.getChainType())
                 .label(wallet.getLabel())
                 .isPrimary(wallet.getIsPrimary())
                 .createdAt(wallet.getCreatedAt())

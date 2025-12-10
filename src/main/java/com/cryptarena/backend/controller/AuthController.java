@@ -26,6 +26,16 @@ public class AuthController {
     }
 
     /**
+     * Handle Privy authentication
+     * Frontend sends Privy access token and user data after Privy authentication
+     */
+    @PostMapping("/privy/callback")
+    public ResponseEntity<AuthResponse> privyCallback(@Valid @RequestBody PrivyAuthRequest request) {
+        AuthResponse response = authService.handlePrivyAuth(request);
+        return ResponseEntity.ok(response);
+    }
+
+    /**
      * Refresh access token using refresh token
      */
     @PostMapping("/refresh")

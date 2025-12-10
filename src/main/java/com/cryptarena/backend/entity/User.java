@@ -36,6 +36,9 @@ public class User {
     @Column(name = "twitter_username", unique = true)
     private String twitterUsername;
 
+    @Column(name = "privy_id", unique = true)
+    private String privyId;
+
     @Column(precision = 30, scale = 2)
     @Builder.Default
     private BigDecimal gold = BigDecimal.ZERO;

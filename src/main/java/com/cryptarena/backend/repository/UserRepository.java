@@ -14,8 +14,12 @@ public interface UserRepository extends JpaRepository<User, UUID> {
 
     Optional<User> findByTwitterUsername(String twitterUsername);
 
+    Optional<User> findByPrivyId(String privyId);
+
     boolean existsByTwitterId(String twitterId);
 
     boolean existsByTwitterUsername(String twitterUsername);
+
+    boolean existsByPrivyId(String privyId);
 }
 

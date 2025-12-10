@@ -32,6 +32,14 @@ public class Wallet {
     @Builder.Default
     private String walletType = "SOLANA";
 
+    @Column(name = "wallet_source", nullable = false)
+    @Builder.Default
+    private String walletSource = "EXTERNAL";
+
+    @Column(name = "chain_type", nullable = false)
+    @Builder.Default
+    private String chainType = "SVM";
+
     @Column
     private String label;
 

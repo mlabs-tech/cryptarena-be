@@ -155,6 +155,8 @@ public class WalletService {
                 .user(user)
                 .address(request.getAddress())
                 .walletType(request.getWalletType())
+                .walletSource(request.getWalletSource() != null ? request.getWalletSource() : "EXTERNAL")
+                .chainType(request.getChainType() != null ? request.getChainType() : "SVM")
                 .label(request.getLabel())
                 .isPrimary(shouldBePrimary)
                 .build();
