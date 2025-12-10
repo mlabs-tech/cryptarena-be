@@ -57,15 +57,15 @@ spring.data.redis:
 
 # CoinMarketCap API Configuration
 coinmarketcap:
-  api-key: ${CMC_API_KEY:cfd87d3a39b64292b1ba80a96c408033}
+  api-key: ${CMC_API_KEY:your-coinmarketcap-api-key}
   base-url: https://pro-api.coinmarketcap.com/v1
   cache-ttl-seconds: 30
 
 # Indexer Service API Key (for internal endpoints)
 indexer:
-  api-key: ${INDEXER_API_KEY:cryptarena-indexer-secret-key-2024}
+  api-key: ${INDEXER_API_KEY:change-this-indexer-secret-key}
 
 # Admin API Key (for admin endpoints)
 admin:
-  api-key: ${ADMIN_API_KEY:cryptarena-admin-secret-key-2024}
+  api-key: ${ADMIN_API_KEY:change-this-admin-secret-key}
 
