@@ -15,8 +15,7 @@ public class CryptoCoinController {
     private final CryptoCoinService cryptoCoinService;
 
     /**
-     * Get cryptocurrency data by symbol
-     * Data is cached in Redis for 30 seconds
+     * Get cryptocurrency data by symbol from CoinMarketCap
      */
     @GetMapping("/coin/{symbol}")
     public ResponseEntity<CryptoCoinDto> getCoinBySymbol(@PathVariable String symbol) {

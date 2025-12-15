@@ -37,9 +37,6 @@ dependencies {
     // Ed25519 signature verification for Solana wallets
     implementation 'org.bouncycastle:bcprov-jdk18on:1.77'
     
-    // Redis for caching
-    implementation 'org.springframework.boot:spring-boot-starter-data-redis'
-    
     // WebClient for external API calls
     implementation 'org.springframework.boot:spring-boot-starter-webflux'
     

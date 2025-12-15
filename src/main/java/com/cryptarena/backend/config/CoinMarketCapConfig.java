@@ -15,7 +15,6 @@ public class CoinMarketCapConfig {
 
     private String apiKey;
     private String baseUrl;
-    private int cacheTtlSeconds = 30;
 
     @Bean
     public WebClient coinMarketCapWebClient() {

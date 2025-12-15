@@ -123,7 +123,7 @@ public class AuthService {
                 .twitterUsername(twitterUser.getUsername())
                 .twitterName(twitterUser.getName())
                 .twitterProfilePicture(profileImageUrl)
-                .gold(new BigDecimal("1000")) // Starting gold for new users
+                .gold(BigDecimal.ZERO)
                 .build();
 
         return userRepository.save(user);
@@ -206,7 +206,7 @@ public class AuthService {
                 .twitterName(privyData.getTwitterName())
                 .twitterProfilePicture(profileImageUrl)
                 .privyId(privyData.getPrivyUserId())
-                .gold(new BigDecimal("1000"))
+                .gold(BigDecimal.ZERO)
                 .build();
 
         return userRepository.save(user);
