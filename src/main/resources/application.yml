@@ -11,11 +11,11 @@ spring:
   jpa:
     hibernate:
       ddl-auto: validate
-    show-sql: true
+    show-sql: false
     properties:
       hibernate:
         dialect: org.hibernate.dialect.PostgreSQLDialect
-        format_sql: true
+        format_sql: false
   
   flyway:
     enabled: true
@@ -68,4 +68,14 @@ indexer:
 # Admin API Key (for admin endpoints)
 admin:
   api-key: ${ADMIN_API_KEY:change-this-admin-secret-key}
+
+# Solana Airdrop Configuration
+solana:
+  rpc:
+    url: ${SOLANA_RPC_URL:https://api.devnet.solana.com}
+  airdrop:
+    private-key: ${SOLANA_AIRDROP_PRIVATE_KEY:your-base58-private-key-here}
+    amount: ${SOLANA_AIRDROP_AMOUNT:0.05}
+    cooldown-hours: ${SOLANA_AIRDROP_COOLDOWN_HOURS:8}
+    use-faucet-fallback: ${SOLANA_USE_FAUCET_FALLBACK:true}
 
